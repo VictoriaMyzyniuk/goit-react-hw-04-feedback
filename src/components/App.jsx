@@ -1,19 +1,21 @@
 import { Component } from 'react';
 import { Statistics } from 'components/Statistics/Statistics';
 import { FeedbackOptions } from 'components/FeedbackOptions/FeedbackOptions';
-import { Section } from 'components/Section/Section';
+import { Notification } from 'components/Notification/Notification';
+import { Container } from 'components/App.styled';
 
 export class App extends Component {
   state = { good: 0, neutral: 0, bad: 0 };
 
-  countFeedback = option => {
+  onLeaveFeedback = option => {
     this.setState(prevState => ({
       [option]: prevState[option] + 1,
     }));
   };
 
   countTotalFeedback = () => {
-    return this.state.good + this.state.neutral + this.state.bad;
+    const total = Object.values(this.state);
+    return total.reduce((acc, value) => acc + value, 0);
   };
   countPositiveFeedbackPercentage = () => {
     return Number.parseInt(
@@ -28,17 +30,23 @@ export class App extends Component {
     const positiveFeedbackPercentage = this.countPositiveFeedbackPercentage();
 
     return (
-      <>
-        <Section title="Please leave feedback" />
-        <FeedbackOptions options={options} countFeedback={this.countFeedback} />
-        <Statistics
-          good={this.state.good}
-          neutral={this.state.neutral}
-          bad={this.state.bad}
-          totalFeedback={total}
-          positiveFeedbackPercentage={positiveFeedbackPercentage}
+      <Container>
+        <FeedbackOptions
+          options={options}
+          onLeaveFeedback={this.onLeaveFeedback}
         />
-      </>
+        {total === 0 ? (
+          <Notification message="There is no feedback" />
+        ) : (
+          <Statistics
+            good={this.state.good}
+            neutral={this.state.neutral}
+            bad={this.state.bad}
+            totalFeedback={total}
+            positiveFeedbackPercentage={positiveFeedbackPercentage}
+          />
+        )}
+      </Container>
     );
   }
 }

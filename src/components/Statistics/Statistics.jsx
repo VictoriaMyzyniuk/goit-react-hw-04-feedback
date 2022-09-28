@@ -1,5 +1,11 @@
-// import PropTypes from 'prop-types';
-import { StatisticEl } from 'components/Statistics/Statistics.styled';
+import PropTypes from 'prop-types';
+import {
+  StatisticEl,
+  StatisticItem,
+  StatisticItemSecondary,
+  StatisticItemTotal,
+} from 'components/Statistics/Statistics.styled';
+import { Section } from 'components/Section/Section';
 export const Statistics = ({
   good,
   neutral,
@@ -8,19 +14,24 @@ export const Statistics = ({
   positiveFeedbackPercentage,
 }) => {
   return (
-    <div>
-      <h2>Statistics</h2>
+    <Section title="Statistics">
       <StatisticEl>
-        <span>Good {good}</span>
-        <span>Neutral {neutral}</span>
-        <span>Bad {bad}</span>
-        <span>Total {totalFeedback}</span>
-        <span>Positive feedback {positiveFeedbackPercentage} %</span>
+        <StatisticItem>Good: {good}</StatisticItem>
+        <StatisticItem>Neutral: {neutral}</StatisticItem>
+        <StatisticItem>Bad: {bad}</StatisticItem>
+        <StatisticItemTotal>Total: {totalFeedback}</StatisticItemTotal>
+        <StatisticItemSecondary>
+          Positive feedback: {positiveFeedbackPercentage}%
+        </StatisticItemSecondary>
       </StatisticEl>
-    </div>
+    </Section>
   );
 };
 
-// FeedbackEl.propTypes = {
-//   PropTypes
-// }
+Statistics.propTypes = {
+  good: PropTypes.number.isRequired,
+  neutral: PropTypes.number.isRequired,
+  bad: PropTypes.number.isRequired,
+  totalFeedback: PropTypes.number.isRequired,
+  positiveFeedbackPercentage: PropTypes.number.isRequired,
+};
