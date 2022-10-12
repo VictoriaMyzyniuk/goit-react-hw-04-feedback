@@ -12,19 +12,15 @@ export const App = () => {
   const onLeaveFeedback = option => {
     if (option === 'good') {
       setGood(good + 1);
-      return;
     } else if (option === 'neutral') {
       setNeutral(neutral + 1);
-      return;
     } else {
       setBad(bad + 1);
     }
   };
 
   const countTotalFeedback = () => {
-    const optionGroup = { good, neutral, bad };
-    const total = Object.values(optionGroup);
-    return total.reduce((acc, value) => acc + value, 0);
+    return good + neutral + bad;
   };
 
   const countPositiveFeedbackPercentage = () => {
